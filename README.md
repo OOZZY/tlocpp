@@ -1,4 +1,13 @@
-# Clone, Build, and Test
+# tlocpp
+
+A C++ library.
+
+## Build Requirements
+
+* CMake
+* C++14 development environment for which CMake can generate build files
+
+## Clone, Build, and Test
 
 ```
 $ git clone <url/to/tlocpp.git> # clone into tlocpp directory

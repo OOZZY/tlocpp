@@ -9,12 +9,29 @@ A C++ library.
 
 ## Clone, Build, and Test
 
+Clone into tlocpp directory.
+
 ```
-$ git clone --branch develop <url/to/tlocpp.git> # clone into tlocpp directory
+$ git clone --branch develop <url/to/tlocpp.git>
+```
+
+Build.
+
+```
 $ mkdir tlocppbuild
 $ cd tlocppbuild
 $ cmake -G 'Unix Makefiles' -DCMAKE_BUILD_TYPE=Debug ../tlocpp
 $ make
-$ make test # run tests with make
-$ ./tlocpp_test # run tests directly
+```
+
+Run tests with make.
+
+```
+$ make test
+```
+
+Run tests directly.
+
+```
+$ ./tlocpp_test
 ```

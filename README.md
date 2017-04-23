@@ -10,7 +10,7 @@ A C++ library.
 ## Clone, Build, and Test
 
 ```
-$ git clone <url/to/tlocpp.git> # clone into tlocpp directory
+$ git clone --branch develop <url/to/tlocpp.git> # clone into tlocpp directory
 $ mkdir tlocppbuild
 $ cd tlocppbuild
 $ cmake -G 'Unix Makefiles' -DCMAKE_BUILD_TYPE=Debug ../tlocpp

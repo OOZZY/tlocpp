@@ -42,12 +42,12 @@ void runTests() {
   const std::deque<const Test *> &tests = constructOrGetTests();
   for (const Test *test : tests) {
     try {
-      std::cout << "[ RUNNING ] " << test->name() << std::endl;
+      std::cout << "[ RUNNING ] " << test->testName() << std::endl;
       test->run();
-      std::cout << "[ DONE    ] " << test->name() << std::endl;
+      std::cout << "[ DONE    ] " << test->testName() << std::endl;
     } catch (const std::exception &e) {
       std::cout << e.what() << std::endl;
-      std::cout << "[ ERROR   ] " << test->name() << std::endl;
+      std::cout << "[ ERROR   ] " << test->testName() << std::endl;
     }
   }
 }

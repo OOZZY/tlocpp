@@ -5,8 +5,9 @@
 
 namespace tlo {
 namespace test {
+// base class for a unit test
 struct Test {
-  virtual const char *name() const = 0;
+  virtual const char *testName() const = 0;
   virtual void run() const = 0;
   virtual ~Test();
 };
@@ -16,7 +17,7 @@ std::deque<const Test *> &constructOrGetTests();
 #define TLO_TEST(TestName)                                                   \
   struct Test##TestName : ::tlo::test::Test {                                \
     Test##TestName() { ::tlo::test::constructOrGetTests().push_back(this); } \
-    const char *name() const override { return #TestName; }                  \
+    const char *testName() const override { return #TestName; }              \
     void run() const override;                                               \
   };                                                                         \
   const Test##TestName test##TestName;                                       \

@@ -1,6 +1,5 @@
-project("tlocpp")
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
-set(CMAKE_LEGACY_CYGWIN_WIN32 0)
+project("tlocpp")
 enable_testing()
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR

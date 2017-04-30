@@ -1,27 +1,26 @@
 #ifndef TLO_TEST_HPP
 #define TLO_TEST_HPP
 
-#include <vector>
+#include <deque>
 
 namespace tlo {
 namespace test {
-/*
 struct Test {
   virtual const char *name() const = 0;
   virtual void run() const = 0;
+  virtual ~Test();
 };
 
-std::vector<const Test*> &tests();
+std::deque<const Test *> &constructOrGetTests();
 
-#define TLO_TEST(TestName)\
-  struct Test##TestName : ::tlo::test::Test {\
-    Test##TestName() { ::tlo::test::tests().push_back(this); }\
-    const char *name() const override { return #TestName; }\
-    void run() const override;\
-  }\
-  const Test##TestName test##TestName;\
+#define TLO_TEST(TestName)                                                   \
+  struct Test##TestName : ::tlo::test::Test {                                \
+    Test##TestName() { ::tlo::test::constructOrGetTests().push_back(this); } \
+    const char *name() const override { return #TestName; }                  \
+    void run() const override;                                               \
+  };                                                                         \
+  const Test##TestName test##TestName;                                       \
   void Test##TestName::run() const
-*/
 
 void expect(bool isExpect, bool condition, const char *file, int line,
             const char *func, const char *conditionString);
@@ -39,6 +38,7 @@ void expect(bool isExpect, bool condition, const char *file, int line,
     }                                                                     \
   } while (0)
 
+void runTests();
 void printReport();
 [[noreturn]] void exit();
 }  // namespace test

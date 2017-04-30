@@ -1,10 +1,8 @@
-#include <iostream>
 #include <tlo/ctci.hpp>
 #include <tlo/test.hpp>
-#include "tlocpp_test.hpp"
 
 namespace {
-void testIsUnique() {
+TLO_TEST(testIsUnique) {
   TLO_EXPECT(tlo::isUnique("a"));
   TLO_EXPECT(tlo::isUnique("ab"));
   TLO_EXPECT(tlo::isUnique("abc"));
@@ -16,7 +14,7 @@ void testIsUnique() {
   TLO_EXPECT(!tlo::isUnique("abcdd"));
 }
 
-void testCheckPermutation() {
+TLO_TEST(testCheckPermutation) {
   TLO_EXPECT(tlo::checkPermutation("a", "a"));
 
   TLO_EXPECT(tlo::checkPermutation("ab", "ab"));
@@ -38,7 +36,7 @@ void testCheckPermutation() {
   TLO_EXPECT(!tlo::checkPermutation("abc", "abcc"));
 }
 
-void testUrlify() {
+TLO_TEST(testUrlify) {
   std::string string = "   ";
   tlo::urlify(string, 1);
   TLO_EXPECT(string == "%20");
@@ -60,7 +58,7 @@ void testUrlify() {
   TLO_EXPECT(string == "Mr%20John%20Smith");
 }
 
-void testPalindromePermutation() {
+TLO_TEST(testPalindromePermutation) {
   TLO_EXPECT(tlo::palindromePermutation("abccba"));
   TLO_EXPECT(tlo::palindromePermutation("abcdcba"));
   TLO_EXPECT(tlo::palindromePermutation("abcdddcba"));
@@ -74,13 +72,3 @@ void testPalindromePermutation() {
   TLO_EXPECT(tlo::palindromePermutationWithBitVector("Tact Coa"));
 }
 }  // namespace
-
-void testCTCI() {
-  testIsUnique();
-  testCheckPermutation();
-  testUrlify();
-  testPalindromePermutation();
-  std::cout << "================" << std::endl;
-  std::cout << "CTCI tests done." << std::endl;
-  std::cout << "================" << std::endl;
-}

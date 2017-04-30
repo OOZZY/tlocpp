@@ -1,14 +1,12 @@
-#include <iostream>
 #include <tlo/bigint.hpp>
 #include <tlo/test.hpp>
 #include <tlo/util.hpp>
-#include "tlocpp_test.hpp"
 
 namespace {
 using UBigInt = tlo::UBigInt;
 using Data = tlo::UBigInt::Data;
 
-void testUBigIntFromBase10String() {
+TLO_TEST(testUBigIntFromBase10String) {
   TLO_EXPECT(UBigInt("").data() == Data{0});
   TLO_EXPECT(UBigInt("+").data() == Data{0});
   TLO_EXPECT(UBigInt("-").data() == Data{0});
@@ -37,7 +35,7 @@ void testUBigIntFromBase10String() {
   TLO_EXPECT(UBigInt("0001").data() == Data{1});
 }
 
-void testUBigIntFromBase100() {
+TLO_TEST(testUBigIntFromBase100) {
   TLO_EXPECT(UBigInt(Data{1}).data() == Data{1});
   TLO_EXPECT(UBigInt(Data{10}).data() == Data{10});
   TLO_EXPECT((UBigInt(Data{0, 1}).data() == Data{0, 1}));
@@ -64,7 +62,7 @@ void testUBigIntFromBase100() {
   TLO_EXPECT((UBigInt(Data{128, 128, 128}).data() == Data{28, 28, 28}));
 }
 
-void testUBigIntFromBase10UnsignedLongLong() {
+TLO_TEST(testUBigIntFromBase10UnsignedLongLong) {
   // UBigInt(0) will be ambiguous because it could match either
   // UBigInt(const char *) or UBigInt(unsigned long long) so use UBigInt(0ULL)
   // to explicitly use UBigInt(unsigned long long) constructol with 0 as the
@@ -86,7 +84,7 @@ void testUBigIntFromBase10UnsignedLongLong() {
   TLO_EXPECT((UBigInt(131072).data() == Data{72, 10, 13}));
 }
 
-void testUBigIntCompareTo() {
+TLO_TEST(testUBigIntCompareTo) {
   TLO_EXPECT(UBigInt("1") < "131072");
   TLO_EXPECT(UBigInt("131072") > ("1"));
 
@@ -114,7 +112,7 @@ void testUBigIntCompareTo() {
   TLO_EXPECT(UBigInt("+1024") == "-1024");
 }
 
-void testUBigIntAddition() {
+TLO_TEST(testUBigIntAddition) {
   TLO_EXPECT(UBigInt("2") + "2" == "4");
   TLO_EXPECT(UBigInt("16") + "16" == "32");
   TLO_EXPECT(UBigInt("128") + "128" == "256");
@@ -146,7 +144,7 @@ void testUBigIntAddition() {
   TLO_EXPECT(UBigInt("42999999") + "42" == "43000041");
 }
 
-void testUBigIntSubtraction() {
+TLO_TEST(testUBigIntSubtraction) {
   TLO_EXPECT(UBigInt("2") - "2" == "0");
   TLO_EXPECT(UBigInt("16") - "16" == "0");
   TLO_EXPECT(UBigInt("128") - "128" == "0");
@@ -178,7 +176,7 @@ void testUBigIntSubtraction() {
   TLO_EXPECT(UBigInt("42999999") - "42" == "42999957");
 }
 
-void testUBigIntMultiplication() {
+TLO_TEST(testUBigIntMultiplication) {
   TLO_EXPECT(UBigInt("2") * "2" == "4");
   TLO_EXPECT(UBigInt("16") * "16" == "256");
   TLO_EXPECT(UBigInt("128") * "128" == "16384");
@@ -209,7 +207,7 @@ void testUBigIntMultiplication() {
   TLO_EXPECT(UBigInt("42999999") * "42" == "1805999958");
 }
 
-void testUBigIntDivision() {
+TLO_TEST(testUBigIntDivision) {
   TLO_EXPECT(UBigInt("2") / "2" == "1");
   TLO_EXPECT(UBigInt("16") / "16" == "1");
   TLO_EXPECT(UBigInt("128") / "128" == "1");
@@ -241,7 +239,7 @@ void testUBigIntDivision() {
   TLO_EXPECT(UBigInt("42999999") / "42" == "1023809");
 }
 
-void testUBigIntModulo() {
+TLO_TEST(testUBigIntModulo) {
   TLO_EXPECT(UBigInt("2") % "2" == "0");
   TLO_EXPECT(UBigInt("16") % "16" == "0");
   TLO_EXPECT(UBigInt("128") % "128" == "0");
@@ -272,7 +270,7 @@ void testUBigIntModulo() {
   TLO_EXPECT(UBigInt("42999999") % "42" == "21");
 }
 
-void testUBigIntFactorial() {
+TLO_TEST(testUBigIntFactorial) {
   TLO_EXPECT(UBigInt("0").factorial() == "1");
   TLO_EXPECT(UBigInt("1").factorial() == "1");
   TLO_EXPECT(UBigInt("2").factorial() == "2");
@@ -308,7 +306,7 @@ void testUBigIntFactorial() {
              "6864000000000000000000000000");
 }
 
-void testUBigIntOperatorLeftShift() {
+TLO_TEST(testUBigIntOperatorLeftShift) {
   TLO_EXPECT(tlo::toString(UBigInt("")) == "0");
   TLO_EXPECT(tlo::toString(UBigInt("+")) == "0");
   TLO_EXPECT(tlo::toString(UBigInt("-")) == "0");
@@ -337,21 +335,3 @@ void testUBigIntOperatorLeftShift() {
   TLO_EXPECT(tlo::toString(UBigInt("0001")) == "1");
 }
 }  // namespace
-
-void testBigInt() {
-  testUBigIntFromBase10String();
-  testUBigIntFromBase100();
-  testUBigIntFromBase10UnsignedLongLong();
-  testUBigIntCompareTo();
-  testUBigIntAddition();
-  testUBigIntSubtraction();
-  testUBigIntMultiplication();
-  testUBigIntDivision();
-  testUBigIntModulo();
-  testUBigIntFactorial();
-  testUBigIntOperatorLeftShift();
-
-  std::cout << "==================" << std::endl;
-  std::cout << "BigInt tests done." << std::endl;
-  std::cout << "==================" << std::endl;
-}

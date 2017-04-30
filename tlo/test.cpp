@@ -3,12 +3,12 @@
 
 namespace tlo {
 namespace test {
-/*
-std::vector<const Test*> &tests() {
-  static std::vector<const Test*> tests;
+Test::~Test() {}
+
+std::deque<const Test *> &constructOrGetTests() {
+  static std::deque<const Test *> tests;
   return tests;
 }
-*/
 
 namespace {
 int numExpects = 0;
@@ -38,6 +38,20 @@ void expect(bool isExpect, bool condition, const char *file, int line,
   }
 }
 
+void runTests() {
+  const std::deque<const Test *> &tests = constructOrGetTests();
+  for (const Test *test : tests) {
+    try {
+      std::cout << "[ RUNNING ] " << test->name() << std::endl;
+      test->run();
+      std::cout << "[ DONE    ] " << test->name() << std::endl;
+    } catch (const std::exception &e) {
+      std::cout << e.what() << std::endl;
+      std::cout << "[ ERROR   ] " << test->name() << std::endl;
+    }
+  }
+}
+
 void printReport() {
   std::cout << "=========================" << std::endl;
   std::cout << "# expects       : " << numExpects << std::endl;
@@ -49,8 +63,10 @@ void printReport() {
 
 void exit() {
   if (numExpectsFailed || numAssertsFailed) {
+    std::cout << "[ FAILED  ]" << std::endl;
     std::exit(EXIT_FAILURE);
   }
+  std::cout << "[ PASSED  ]" << std::endl;
   std::exit(EXIT_SUCCESS);
 }
 }  // namespace test

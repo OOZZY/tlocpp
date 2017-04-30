@@ -18,11 +18,19 @@
   } while (0)
 
 namespace {
+TLO_TEST(testDArrayInitialCounts) {
+  tlo::countingAllocatorResetCounts();
+  TLO_EXPECT(tlo::countingAllocatorAllocateCount() == 0);
+  TLO_EXPECT(tlo::countingAllocatorAllocateCount() ==
+             tlo::countingAllocatorDeallocateCount());
+  TLO_EXPECT(tlo::countingAllocatorTotalByteCount() == 0);
+}
+
 using DArrayInt = tlo::DArray<int, tlo::CountingAllocator<int>>;
 using DArrayIntPtr =
     tlo::DArray<tlo::IntPtr, tlo::CountingAllocator<tlo::IntPtr>>;
 
-void testDArrayIntConstructDestruct() {
+TLO_TEST(testDArrayIntConstructDestruct) {
   DArrayInt ints;
   EXPECT_DARRAY_PROPERTIES(ints, 0, true, int, tlo::CountingAllocator<int>);
 }
@@ -34,13 +42,13 @@ void testDArrayIntConstructDestruct() {
     TLO_EXPECT((darray).capacity() == (capacity_));                            \
   } while (0)
 
-void testDArrayIntConstructWithCapacityDestruct() {
+TLO_TEST(testDArrayIntConstructWithCapacityDestruct) {
   DArrayInt ints(SOME_NUMBER);
   EXPECT_DARRAY_ALL_PROPERTIES(ints, 0, SOME_NUMBER, true, int,
                                tlo::CountingAllocator<int>);
 }
 
-void testDArrayIntNewDelete() {
+TLO_TEST(testDArrayIntNewDelete) {
   auto ints = new DArrayInt;
   // "decltype(*ints)" is "tlo::DArray<int, tlo::CountingAllocator<int>> &"
   // "DECLTYPE(*ints)" is "tlo::DArray<int, tlo::CountingAllocator<int>>"
@@ -49,7 +57,7 @@ void testDArrayIntNewDelete() {
   ints = nullptr;
 }
 
-void testDArrayIntNewWithCapacityDelete() {
+TLO_TEST(testDArrayIntNewWithCapacityDelete) {
   auto ints = new DArrayInt(SOME_NUMBER);
   EXPECT_DARRAY_ALL_PROPERTIES(*ints, 0, SOME_NUMBER, true, int,
                                tlo::CountingAllocator<int>);
@@ -81,6 +89,11 @@ void testDArrayIntPushOrMoveBackOnce(bool testPush) {
   EXPECT_DARRAY_INT_ELEMENTS(ints, 0, SOME_NUMBER, SOME_NUMBER, SOME_NUMBER);
 }
 
+TLO_TEST(testDArrayIntPushOrMoveBackOnce) {
+  testDArrayIntPushOrMoveBackOnce(true);
+  testDArrayIntPushOrMoveBackOnce(false);
+}
+
 void testDArrayIntPushOrMoveBackUntilResize(bool testPush) {
   DArrayInt ints;
   for (std::size_t i = 0; i < SOME_NUMBER; ++i) {
@@ -97,7 +110,12 @@ void testDArrayIntPushOrMoveBackUntilResize(bool testPush) {
   }
 }
 
-void testDArrayIntPushBackOncePopBackOnce() {
+TLO_TEST(testDArrayIntPushOrMoveBackUntilResize) {
+  testDArrayIntPushOrMoveBackUntilResize(true);
+  testDArrayIntPushOrMoveBackUntilResize(false);
+}
+
+TLO_TEST(testDArrayIntPushBackOncePopBackOnce) {
   DArrayInt ints;
   int value = SOME_NUMBER;
   ints.pushBack(value);
@@ -105,7 +123,7 @@ void testDArrayIntPushBackOncePopBackOnce() {
   EXPECT_DARRAY_PROPERTIES(ints, 0, true, int, tlo::CountingAllocator<int>);
 }
 
-void testDArrayIntPushBackUntilResizePopBackUntilEmpty() {
+TLO_TEST(testDArrayIntPushBackUntilResizePopBackUntilEmpty) {
   DArrayInt ints;
 
   for (std::size_t i = 0; i < SOME_NUMBER; ++i) {
@@ -124,7 +142,7 @@ void testDArrayIntPushBackUntilResizePopBackUntilEmpty() {
   EXPECT_DARRAY_PROPERTIES(ints, 0, true, int, tlo::CountingAllocator<int>);
 }
 
-void testDArrayIntConstructCopy() {
+TLO_TEST(testDArrayIntConstructCopy) {
   DArrayInt ints;
 
   for (int i = 0; i < SOME_NUMBER; ++i) {
@@ -143,7 +161,7 @@ void testDArrayIntConstructCopy() {
   }
 }
 
-void testDArrayIntNewCopy() {
+TLO_TEST(testDArrayIntNewCopy) {
   DArrayInt ints;
 
   for (int i = 0; i < SOME_NUMBER; ++i) {
@@ -165,7 +183,7 @@ void testDArrayIntNewCopy() {
   copy = nullptr;
 }
 
-void testDArrayIntCopy() {
+TLO_TEST(testDArrayIntCopy) {
   DArrayInt ints;
 
   for (int i = 0; i < SOME_NUMBER; ++i) {
@@ -214,6 +232,11 @@ void testDArrayIntPtrPushOrMoveBackOnce(bool testPush) {
                                 SOME_NUMBER);
 }
 
+TLO_TEST(testDArrayIntPtrPushOrMoveBackOnce) {
+  testDArrayIntPtrPushOrMoveBackOnce(true);
+  testDArrayIntPtrPushOrMoveBackOnce(false);
+}
+
 void testDArrayIntPtrPushOrMoveBackUntilResize(bool testPush) {
   DArrayIntPtr intPtrs;
   for (std::size_t i = 0; i < SOME_NUMBER; ++i) {
@@ -231,7 +254,12 @@ void testDArrayIntPtrPushOrMoveBackUntilResize(bool testPush) {
   }
 }
 
-void testDArrayIntPtrPushBackOncePopBackOnce() {
+TLO_TEST(testDArrayIntPtrPushOrMoveBackUntilResize) {
+  testDArrayIntPtrPushOrMoveBackUntilResize(true);
+  testDArrayIntPtrPushOrMoveBackUntilResize(false);
+}
+
+TLO_TEST(testDArrayIntPtrPushBackOncePopBackOnce) {
   DArrayIntPtr intPtrs;
   tlo::IntPtr intPtr;
   *intPtr.ptr = SOME_NUMBER;
@@ -241,7 +269,7 @@ void testDArrayIntPtrPushBackOncePopBackOnce() {
                            tlo::CountingAllocator<tlo::IntPtr>);
 }
 
-void testDArrayIntPtrPushBackUntilResizePopBackUntilEmpty() {
+TLO_TEST(testDArrayIntPtrPushBackUntilResizePopBackUntilEmpty) {
   DArrayIntPtr intPtrs;
 
   for (std::size_t i = 0; i < SOME_NUMBER; ++i) {
@@ -262,7 +290,7 @@ void testDArrayIntPtrPushBackUntilResizePopBackUntilEmpty() {
                            tlo::CountingAllocator<tlo::IntPtr>);
 }
 
-void testDArrayIntPtrPushBackUntilResizeUnorderedRemoveBackUntilEmpty() {
+TLO_TEST(testDArrayIntPtrPushBackUntilResizeUnorderedRemoveBackUntilEmpty) {
   DArrayIntPtr intPtrs;
 
   for (std::size_t i = 0; i < SOME_NUMBER; ++i) {
@@ -283,7 +311,7 @@ void testDArrayIntPtrPushBackUntilResizeUnorderedRemoveBackUntilEmpty() {
                            tlo::CountingAllocator<tlo::IntPtr>);
 }
 
-void testDArrayIntPtrPushBackUntilResizeUnorderedRemoveFrontUntilEmpty() {
+TLO_TEST(testDArrayIntPtrPushBackUntilResizeUnorderedRemoveFrontUntilEmpty) {
   DArrayIntPtr intPtrs;
 
   for (std::size_t i = 0; i < SOME_NUMBER; ++i) {
@@ -313,37 +341,8 @@ void testDArrayIntPtrPushBackUntilResizeUnorderedRemoveFrontUntilEmpty() {
   EXPECT_DARRAY_PROPERTIES(intPtrs, 0, true, tlo::IntPtr,
                            tlo::CountingAllocator<tlo::IntPtr>);
 }
-}  // namespace
 
-void testDArray() {
-  tlo::countingAllocatorResetCounts();
-  TLO_EXPECT(tlo::countingAllocatorAllocateCount() == 0);
-  TLO_EXPECT(tlo::countingAllocatorAllocateCount() ==
-             tlo::countingAllocatorDeallocateCount());
-  TLO_EXPECT(tlo::countingAllocatorTotalByteCount() == 0);
-
-  testDArrayIntConstructDestruct();
-  testDArrayIntConstructWithCapacityDestruct();
-  testDArrayIntNewDelete();
-  testDArrayIntNewWithCapacityDelete();
-  testDArrayIntPushOrMoveBackOnce(true);
-  testDArrayIntPushOrMoveBackOnce(false);
-  testDArrayIntPushOrMoveBackUntilResize(true);
-  testDArrayIntPushOrMoveBackUntilResize(false);
-  testDArrayIntPushBackOncePopBackOnce();
-  testDArrayIntPushBackUntilResizePopBackUntilEmpty();
-  testDArrayIntConstructCopy();
-  testDArrayIntNewCopy();
-  testDArrayIntCopy();
-  testDArrayIntPtrPushOrMoveBackOnce(true);
-  testDArrayIntPtrPushOrMoveBackOnce(false);
-  testDArrayIntPtrPushOrMoveBackUntilResize(true);
-  testDArrayIntPtrPushOrMoveBackUntilResize(false);
-  testDArrayIntPtrPushBackOncePopBackOnce();
-  testDArrayIntPtrPushBackUntilResizePopBackUntilEmpty();
-  testDArrayIntPtrPushBackUntilResizeUnorderedRemoveBackUntilEmpty();
-  testDArrayIntPtrPushBackUntilResizeUnorderedRemoveFrontUntilEmpty();
-
+TLO_TEST(testDArrayFinalCounts) {
   TLO_EXPECT(tlo::countingAllocatorAllocateCount() > 0);
   TLO_EXPECT(tlo::countingAllocatorAllocateCount() ==
              tlo::countingAllocatorDeallocateCount());
@@ -353,7 +352,5 @@ void testDArray() {
             << sizeof(tlo::DArray<int, tlo::CountingAllocator<int>>)
             << std::endl;
   tlo::countingAllocatorPrintCounts();
-  std::cout << "==================" << std::endl;
-  std::cout << "DArray tests done." << std::endl;
-  std::cout << "==================" << std::endl;
 }
+}  // namespace

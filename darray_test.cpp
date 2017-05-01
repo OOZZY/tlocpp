@@ -4,19 +4,6 @@
 #include <tlo/util.hpp>
 #include "tlocpp_test.hpp"
 
-#define DECLTYPE(thing) std::remove_reference<decltype(thing)>::type
-
-#define EXPECT_DARRAY_PROPERTIES(darray, size_, isEmpty_, valueType,      \
-                                 allocatorType)                           \
-  do {                                                                    \
-    TLO_EXPECT((darray).size() == (size_));                               \
-    TLO_EXPECT((darray).capacity() >= (darray).size());                   \
-    TLO_EXPECT((darray).isEmpty() == (isEmpty_));                         \
-    TLO_EXPECT(typeid(DECLTYPE(darray)::ValueType) == typeid(valueType)); \
-    TLO_EXPECT(typeid(DECLTYPE(darray)::AllocatorType) ==                 \
-               typeid(allocatorType));                                    \
-  } while (0)
-
 namespace {
 TLO_TEST(testDArrayInitialCounts) {
   tlo::countingAllocatorResetCounts();
@@ -29,6 +16,19 @@ TLO_TEST(testDArrayInitialCounts) {
 using DArrayInt = tlo::DArray<int, tlo::CountingAllocator<int>>;
 using DArrayIntPtr =
     tlo::DArray<tlo::IntPtr, tlo::CountingAllocator<tlo::IntPtr>>;
+
+#define DECLTYPE(thing) std::remove_reference<decltype(thing)>::type
+
+#define EXPECT_DARRAY_PROPERTIES(darray, size_, isEmpty_, valueType,      \
+                                 allocatorType)                           \
+  do {                                                                    \
+    TLO_EXPECT((darray).size() == (size_));                               \
+    TLO_EXPECT((darray).capacity() >= (darray).size());                   \
+    TLO_EXPECT((darray).isEmpty() == (isEmpty_));                         \
+    TLO_EXPECT(typeid(DECLTYPE(darray)::ValueType) == typeid(valueType)); \
+    TLO_EXPECT(typeid(DECLTYPE(darray)::AllocatorType) ==                 \
+               typeid(allocatorType));                                    \
+  } while (0)
 
 TLO_TEST(testDArrayIntConstructDestruct) {
   DArrayInt ints;

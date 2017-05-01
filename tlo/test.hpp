@@ -15,27 +15,30 @@ struct Test {
 
 std::deque<const Test *> &constructOrGetTests();
 
-#define TLO_TEST(TestName)                                                   \
-  struct Test##TestName : ::tlo::test::Test {                                \
-    Test##TestName() { ::tlo::test::constructOrGetTests().push_back(this); } \
-    const char *testName() const override { return #TestName; }              \
-    void run() const override;                                               \
-  };                                                                         \
-  const Test##TestName test##TestName;                                       \
-  void Test##TestName::run() const
+#define TLO_TEST(TestName)                                      \
+  struct GeneratedTest##TestName : ::tlo::test::Test {          \
+    GeneratedTest##TestName() {                                 \
+      ::tlo::test::constructOrGetTests().push_back(this);       \
+    }                                                           \
+    const char *testName() const override { return #TestName; } \
+    void run() const override;                                  \
+  };                                                            \
+  const GeneratedTest##TestName generatedTest##TestName;        \
+  void GeneratedTest##TestName::run() const
 
-#define TLO_TEST_USING_FIXTURE(FixtureName, TestName)            \
-  struct Test##FixtureName##TestName : FixtureName {             \
-    Test##FixtureName##TestName() {                              \
-      ::tlo::test::constructOrGetTests().push_back(this);        \
-    }                                                            \
-    const char *testName() const override {                      \
-      return #FixtureName "." #TestName;                         \
-    }                                                            \
-    void run() const override;                                   \
-  };                                                             \
-  const Test##FixtureName##TestName test##FixtureName##TestName; \
-  void Test##FixtureName##TestName::run() const
+#define TLO_TEST_USING_FIXTURE(FixtureName, TestName)         \
+  struct GeneratedTest##FixtureName##TestName : FixtureName { \
+    GeneratedTest##FixtureName##TestName() {                  \
+      ::tlo::test::constructOrGetTests().push_back(this);     \
+    }                                                         \
+    const char *testName() const override {                   \
+      return #FixtureName "." #TestName;                      \
+    }                                                         \
+    void run() const override;                                \
+  };                                                          \
+  const GeneratedTest##FixtureName##TestName                  \
+      generatedTest##FixtureName##TestName;                   \
+  void GeneratedTest##FixtureName##TestName::run() const
 
 void expect(bool isExpect, bool condition, const char *file, int line,
             const char *func, const char *conditionString);

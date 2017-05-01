@@ -27,3 +27,6 @@ add_subdirectory(tlo)
 add_executable(tlocpp_test darray_test.cpp ctci_test.cpp bigint_test.cpp test_test.cpp)
 target_link_libraries(tlocpp_test tlocpp tlocpptestmain)
 add_test(tlocpp_test tlocpp_test)
+
+# make headers of header-only modules show up in IDE project
+add_custom_target(tlocpprootheaders SOURCES tlocpp_test.hpp)

@@ -6,7 +6,7 @@ namespace {
 using UBigInt = tlo::UBigInt;
 using Data = tlo::UBigInt::Data;
 
-TLO_TEST(testUBigIntFromBase10String) {
+TLO_TEST(UBigIntFromBase10String) {
   TLO_EXPECT(UBigInt("").data() == Data{0});
   TLO_EXPECT(UBigInt("+").data() == Data{0});
   TLO_EXPECT(UBigInt("-").data() == Data{0});
@@ -35,7 +35,7 @@ TLO_TEST(testUBigIntFromBase10String) {
   TLO_EXPECT(UBigInt("0001").data() == Data{1});
 }
 
-TLO_TEST(testUBigIntFromBase100) {
+TLO_TEST(UBigIntFromBase100) {
   TLO_EXPECT(UBigInt(Data{1}).data() == Data{1});
   TLO_EXPECT(UBigInt(Data{10}).data() == Data{10});
   TLO_EXPECT((UBigInt(Data{0, 1}).data() == Data{0, 1}));
@@ -62,7 +62,7 @@ TLO_TEST(testUBigIntFromBase100) {
   TLO_EXPECT((UBigInt(Data{128, 128, 128}).data() == Data{28, 28, 28}));
 }
 
-TLO_TEST(testUBigIntFromBase10UnsignedLongLong) {
+TLO_TEST(UBigIntFromBase10UnsignedLongLong) {
   // UBigInt(0) will be ambiguous because it could match either
   // UBigInt(const char *) or UBigInt(unsigned long long) so use UBigInt(0ULL)
   // to explicitly use UBigInt(unsigned long long) constructol with 0 as the
@@ -84,7 +84,7 @@ TLO_TEST(testUBigIntFromBase10UnsignedLongLong) {
   TLO_EXPECT((UBigInt(131072).data() == Data{72, 10, 13}));
 }
 
-TLO_TEST(testUBigIntCompareTo) {
+TLO_TEST(UBigIntCompareTo) {
   TLO_EXPECT(UBigInt("1") < "131072");
   TLO_EXPECT(UBigInt("131072") > ("1"));
 
@@ -112,7 +112,7 @@ TLO_TEST(testUBigIntCompareTo) {
   TLO_EXPECT(UBigInt("+1024") == "-1024");
 }
 
-TLO_TEST(testUBigIntAddition) {
+TLO_TEST(UBigIntAddition) {
   TLO_EXPECT(UBigInt("2") + "2" == "4");
   TLO_EXPECT(UBigInt("16") + "16" == "32");
   TLO_EXPECT(UBigInt("128") + "128" == "256");
@@ -144,7 +144,7 @@ TLO_TEST(testUBigIntAddition) {
   TLO_EXPECT(UBigInt("42999999") + "42" == "43000041");
 }
 
-TLO_TEST(testUBigIntSubtraction) {
+TLO_TEST(UBigIntSubtraction) {
   TLO_EXPECT(UBigInt("2") - "2" == "0");
   TLO_EXPECT(UBigInt("16") - "16" == "0");
   TLO_EXPECT(UBigInt("128") - "128" == "0");
@@ -176,7 +176,7 @@ TLO_TEST(testUBigIntSubtraction) {
   TLO_EXPECT(UBigInt("42999999") - "42" == "42999957");
 }
 
-TLO_TEST(testUBigIntMultiplication) {
+TLO_TEST(UBigIntMultiplication) {
   TLO_EXPECT(UBigInt("2") * "2" == "4");
   TLO_EXPECT(UBigInt("16") * "16" == "256");
   TLO_EXPECT(UBigInt("128") * "128" == "16384");
@@ -207,7 +207,7 @@ TLO_TEST(testUBigIntMultiplication) {
   TLO_EXPECT(UBigInt("42999999") * "42" == "1805999958");
 }
 
-TLO_TEST(testUBigIntDivision) {
+TLO_TEST(UBigIntDivision) {
   TLO_EXPECT(UBigInt("2") / "2" == "1");
   TLO_EXPECT(UBigInt("16") / "16" == "1");
   TLO_EXPECT(UBigInt("128") / "128" == "1");
@@ -239,7 +239,7 @@ TLO_TEST(testUBigIntDivision) {
   TLO_EXPECT(UBigInt("42999999") / "42" == "1023809");
 }
 
-TLO_TEST(testUBigIntModulo) {
+TLO_TEST(UBigIntModulo) {
   TLO_EXPECT(UBigInt("2") % "2" == "0");
   TLO_EXPECT(UBigInt("16") % "16" == "0");
   TLO_EXPECT(UBigInt("128") % "128" == "0");
@@ -270,7 +270,7 @@ TLO_TEST(testUBigIntModulo) {
   TLO_EXPECT(UBigInt("42999999") % "42" == "21");
 }
 
-TLO_TEST(testUBigIntFactorial) {
+TLO_TEST(UBigIntFactorial) {
   TLO_EXPECT(UBigInt("0").factorial() == "1");
   TLO_EXPECT(UBigInt("1").factorial() == "1");
   TLO_EXPECT(UBigInt("2").factorial() == "2");
@@ -306,7 +306,7 @@ TLO_TEST(testUBigIntFactorial) {
              "6864000000000000000000000000");
 }
 
-TLO_TEST(testUBigIntOperatorLeftShift) {
+TLO_TEST(UBigIntOperatorLeftShift) {
   TLO_EXPECT(tlo::toString(UBigInt("")) == "0");
   TLO_EXPECT(tlo::toString(UBigInt("+")) == "0");
   TLO_EXPECT(tlo::toString(UBigInt("-")) == "0");

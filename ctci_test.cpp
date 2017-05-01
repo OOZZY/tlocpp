@@ -2,7 +2,7 @@
 #include <tlo/test.hpp>
 
 namespace {
-TLO_TEST(testIsUnique) {
+TLO_TEST(IsUnique) {
   TLO_EXPECT(tlo::isUnique("a"));
   TLO_EXPECT(tlo::isUnique("ab"));
   TLO_EXPECT(tlo::isUnique("abc"));
@@ -14,7 +14,7 @@ TLO_TEST(testIsUnique) {
   TLO_EXPECT(!tlo::isUnique("abcdd"));
 }
 
-TLO_TEST(testCheckPermutation) {
+TLO_TEST(CheckPermutation) {
   TLO_EXPECT(tlo::checkPermutation("a", "a"));
 
   TLO_EXPECT(tlo::checkPermutation("ab", "ab"));
@@ -36,7 +36,7 @@ TLO_TEST(testCheckPermutation) {
   TLO_EXPECT(!tlo::checkPermutation("abc", "abcc"));
 }
 
-TLO_TEST(testUrlify) {
+TLO_TEST(Urlify) {
   std::string string = "   ";
   tlo::urlify(string, 1);
   TLO_EXPECT(string == "%20");
@@ -58,7 +58,7 @@ TLO_TEST(testUrlify) {
   TLO_EXPECT(string == "Mr%20John%20Smith");
 }
 
-TLO_TEST(testPalindromePermutation) {
+TLO_TEST(PalindromePermutation) {
   TLO_EXPECT(tlo::palindromePermutation("abccba"));
   TLO_EXPECT(tlo::palindromePermutation("abcdcba"));
   TLO_EXPECT(tlo::palindromePermutation("abcdddcba"));

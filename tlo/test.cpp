@@ -12,8 +12,8 @@ std::deque<const Test *> &constructOrGetTests() {
 
 namespace {
 int numExpects = 0;
-int numExpectsFailed = 0;
 int numAsserts = 0;
+int numExpectsFailed = 0;
 int numAssertsFailed = 0;
 int numObjectsCaught = 0;
 }  // namespace
@@ -62,8 +62,8 @@ void runTests() {
 void printReport() {
   std::cout << "=========================" << std::endl;
   std::cout << "# expects       : " << numExpects << std::endl;
-  std::cout << "# expects failed: " << numExpectsFailed << std::endl;
   std::cout << "# asserts       : " << numAsserts << std::endl;
+  std::cout << "# expects failed: " << numExpectsFailed << std::endl;
   std::cout << "# asserts failed: " << numAssertsFailed << std::endl;
   std::cout << "# objects caught: " << numObjectsCaught << std::endl;
   std::cout << "=========================" << std::endl;

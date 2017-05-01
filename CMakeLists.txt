@@ -24,6 +24,6 @@ set(CMAKE_CXX_FLAGS_DEBUG "${debug_flags}" CACHE STRING
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 add_subdirectory(tlo)
-add_executable(tlocpp_test darray_test.cpp ctci_test.cpp bigint_test.cpp)
+add_executable(tlocpp_test darray_test.cpp ctci_test.cpp bigint_test.cpp test_test.cpp)
 target_link_libraries(tlocpp_test tlocpp tlocpptestmain)
 add_test(tlocpp_test tlocpp_test)

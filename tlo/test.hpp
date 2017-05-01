@@ -5,7 +5,8 @@
 
 namespace tlo {
 namespace test {
-// base class for a unit test
+// base class for a unit test, a test fixture, or a unit test using a test
+// fixture
 struct Test {
   virtual const char *testName() const = 0;
   virtual void run() const = 0;
@@ -22,6 +23,19 @@ std::deque<const Test *> &constructOrGetTests();
   };                                                                         \
   const Test##TestName test##TestName;                                       \
   void Test##TestName::run() const
+
+#define TLO_TEST_USING_FIXTURE(FixtureName, TestName)            \
+  struct Test##FixtureName##TestName : FixtureName {             \
+    Test##FixtureName##TestName() {                              \
+      ::tlo::test::constructOrGetTests().push_back(this);        \
+    }                                                            \
+    const char *testName() const override {                      \
+      return #FixtureName "." #TestName;                         \
+    }                                                            \
+    void run() const override;                                   \
+  };                                                             \
+  const Test##FixtureName##TestName test##FixtureName##TestName; \
+  void Test##FixtureName##TestName::run() const
 
 void expect(bool isExpect, bool condition, const char *file, int line,
             const char *func, const char *conditionString);

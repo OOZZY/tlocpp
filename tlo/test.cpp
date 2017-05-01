@@ -15,6 +15,7 @@ int numExpects = 0;
 int numExpectsFailed = 0;
 int numAsserts = 0;
 int numAssertsFailed = 0;
+int numObjectsCaught = 0;
 }  // namespace
 
 void expect(bool isExpect, bool condition, const char *file, int line,
@@ -46,8 +47,14 @@ void runTests() {
       test->run();
       std::cout << "[ DONE    ] " << test->testName() << std::endl;
     } catch (const std::exception &e) {
+      ++numObjectsCaught;
       std::cout << e.what() << std::endl;
-      std::cout << "[ ERROR   ] " << test->testName() << std::endl;
+      std::cout << "[ ERROR   ] " << test->testName() << " threw an exception"
+                << std::endl;
+    } catch (...) {
+      ++numObjectsCaught;
+      std::cout << "[ ERROR   ] " << test->testName() << " threw an object"
+                << std::endl;
     }
   }
 }
@@ -58,11 +65,12 @@ void printReport() {
   std::cout << "# expects failed: " << numExpectsFailed << std::endl;
   std::cout << "# asserts       : " << numAsserts << std::endl;
   std::cout << "# asserts failed: " << numAssertsFailed << std::endl;
+  std::cout << "# objects caught: " << numObjectsCaught << std::endl;
   std::cout << "=========================" << std::endl;
 }
 
 void exit() {
-  if (numExpectsFailed || numAssertsFailed) {
+  if (numExpectsFailed || numAssertsFailed || numObjectsCaught) {
     std::cout << "[ FAILED  ]" << std::endl;
     std::exit(EXIT_FAILURE);
   }

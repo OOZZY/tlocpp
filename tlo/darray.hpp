@@ -145,7 +145,7 @@ class DArray {
   }
 
  private:
-  static const std::size_t STARTING_CAPACITY = 2;
+  static const std::size_t STARTING_CAPACITY = 1;
 
   void allocateBytesIfNeeded() {
     if (!bytes) {

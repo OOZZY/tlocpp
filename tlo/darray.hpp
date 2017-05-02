@@ -120,28 +120,28 @@ class DArray {
     assert(isValid());
     assert(!isEmpty());
 
-    return operator[](0);
+    return bytes[0];
   }
 
   ValueType &front() {
     assert(isValid());
     assert(!isEmpty());
 
-    return operator[](0);
+    return bytes[0];
   }
 
   const ValueType &back() const {
     assert(isValid());
     assert(!isEmpty());
 
-    return operator[](size_ - 1);
+    return bytes[size_ - 1];
   }
 
   ValueType &back() {
     assert(isValid());
     assert(!isEmpty());
 
-    return operator[](size_ - 1);
+    return bytes[size_ - 1];
   }
 
  private:

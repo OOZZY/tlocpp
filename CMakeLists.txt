@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
 project("tlocpp")
 enable_testing()
 
@@ -22,11 +22,5 @@ set(CMAKE_CXX_FLAGS "${flags}" CACHE STRING
 set(CMAKE_CXX_FLAGS_DEBUG "${debug_flags}" CACHE STRING
     "Flags used by the compiler during debug builds." FORCE)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-add_subdirectory(tlo)
-add_executable(tlocpp_test darray_test.cpp ctci_test.cpp bigint_test.cpp test_test.cpp)
-target_link_libraries(tlocpp_test tlocpp tlocpptestmain)
-add_test(tlocpp_test tlocpp_test)
-
-# make headers of header-only modules show up in IDE project
-add_custom_target(tlocpprootheaders SOURCES tlocpp_test.hpp)
+add_subdirectory(src)
+add_subdirectory(test)

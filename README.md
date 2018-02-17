@@ -33,5 +33,5 @@ $ make test
 Run tests directly.
 
 ```
-$ ./tlocpp_test
+$ ./test/tlocpp_test
 ```

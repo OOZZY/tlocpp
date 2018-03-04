@@ -4,7 +4,7 @@
 namespace tlo {
 namespace {
 const int NUM_CHAR_VALUES = 256;
-}  // namespace tlo
+}  // namespace
 
 bool isUnique(const std::string &string) {
   if (string.size() > NUM_CHAR_VALUES) {
@@ -88,7 +88,7 @@ bool oneTrue(const bool *bools, std::size_t size) {
 
   return trueFound;
 }
-}  // namespace tlo
+}  // namespace
 
 /*
  * - if no character has an odd number of occurrences and every character has

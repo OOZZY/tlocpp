@@ -5,7 +5,7 @@ namespace tlo {
 namespace detail {
 unsigned long allocateCount = 0;
 unsigned long deallocateCount = 0;
-unsigned long totalByteCount = 0;
+std::size_t totalByteCount = 0;
 }  // namespace detail
 
 void countingAllocatorResetCounts() {
@@ -20,9 +20,7 @@ unsigned long countingAllocatorDeallocateCount() {
   return detail::deallocateCount;
 }
 
-unsigned long countingAllocatorTotalByteCount() {
-  return detail::totalByteCount;
-}
+std::size_t countingAllocatorTotalByteCount() { return detail::totalByteCount; }
 
 void countingAllocatorPrintCounts() {
   std::cout << "allocate count: " << detail::allocateCount << std::endl;

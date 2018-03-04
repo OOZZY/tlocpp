@@ -73,16 +73,19 @@ UBigInt::Data toBase100(const std::string &base10Int) {
   UBigInt::Data base100Int(numBase100Digits, 0);
 
   for (std::size_t i = 0; i < base10Int.size(); ++i) {
-    unsigned base10Power = i % 2;
-    unsigned base10Digit = static_cast<unsigned>(tlo::rat(base10Int, i) - '0');
-    unsigned base10Value = base10Digit;
+    if (std::isdigit(tlo::rat(base10Int, i))) {
+      unsigned base10Power = i % 2;
+      unsigned base10Digit =
+          static_cast<unsigned>(tlo::rat(base10Int, i) - '0');
+      unsigned base10Value = base10Digit;
 
-    if (base10Power == 1) {
-      base10Value *= 10;
+      if (base10Power == 1) {
+        base10Value *= 10;
+      }
+
+      std::size_t base100Index = i / 2;
+      base100Int[base100Index] += base10Value;
     }
-
-    std::size_t base100Index = i / 2;
-    base100Int[base100Index] += base10Value;
   }
 
   removeLeading0s(base100Int);
@@ -199,10 +202,12 @@ UBigInt &UBigInt::add(const UBigInt &other) {
 
   Digit carryOver = 0;  // will be at most 1
   for (std::size_t i = 0; i < base100Int.size(); ++i) {
-    Digit otherDigit = other.base100Int[i];
+    Digit otherDigit;
 
     if (i >= other.base100Int.size()) {
       otherDigit = 0;
+    } else {
+      otherDigit = other.base100Int[i];
     }
 
     base100Int[i] += otherDigit + carryOver;
@@ -234,10 +239,12 @@ UBigInt &UBigInt::subtract(const UBigInt &other) {
   if (compareTo(other) >= 0) {
     Digit borrow = 0;  // will be at most 1
     for (std::size_t i = 0; i < base100Int.size(); ++i) {
-      Digit otherDigit = other.base100Int[i];
+      Digit otherDigit;
 
       if (i >= other.base100Int.size()) {
         otherDigit = 0;
+      } else {
+        otherDigit = other.base100Int[i];
       }
 
       // using signed short because base100Int[i] is unsigned and might be 0

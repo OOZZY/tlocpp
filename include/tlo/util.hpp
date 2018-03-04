@@ -9,7 +9,7 @@ namespace tlo {
 namespace detail {
 extern unsigned long allocateCount;
 extern unsigned long deallocateCount;
-extern unsigned long totalByteCount;
+extern std::size_t totalByteCount;
 }  // namespace detail
 
 template <typename ValueType>
@@ -50,7 +50,7 @@ bool operator!=(const CountingAllocator<ValueType> &x,
 void countingAllocatorResetCounts();
 unsigned long countingAllocatorAllocateCount();
 unsigned long countingAllocatorDeallocateCount();
-unsigned long countingAllocatorTotalByteCount();
+std::size_t countingAllocatorTotalByteCount();
 void countingAllocatorPrintCounts();
 
 class IntPtr {

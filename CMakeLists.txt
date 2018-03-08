@@ -4,23 +4,11 @@ enable_testing()
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR
     "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-  set(flags "-std=c++14 -pedantic -Wall -Wextra -Werror")
+  set(warning_compile_options -pedantic -Wall -Wextra -Werror)
   if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    set(flags "${flags} -Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-padded -Wno-exit-time-destructors -Wno-global-constructors")
+    set(warning_compile_options ${warning_compile_options} -Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic)
   endif()
-  set(debug_flags "-g")
-  #set(debug_flags "-g -fsanitize=address -fsanitize=undefined -O1 -fno-omit-frame-pointer -fno-optimize-sibling-calls")
-  #set(debug_flags "-g -fsanitize=memory -fsanitize=undefined -O1 -fno-omit-frame-pointer -fno-optimize-sibling-calls")
-else()
-  set(flags "${CMAKE_CXX_FLAGS}")
-  set(debug_flags "${CMAKE_CXX_FLAGS_DEBUG}")
 endif()
-
-message(STATUS "tlocpp setting flags")
-set(CMAKE_CXX_FLAGS "${flags}" CACHE STRING
-    "Flags used by the compiler during all build types." FORCE)
-set(CMAKE_CXX_FLAGS_DEBUG "${debug_flags}" CACHE STRING
-    "Flags used by the compiler during debug builds." FORCE)
 
 add_subdirectory(src)
 add_subdirectory(test)

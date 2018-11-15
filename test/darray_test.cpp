@@ -3,6 +3,7 @@
 #include <tlo/test.hpp>
 #include <tlo/util.hpp>
 #include "tlocpp_test.hpp"
+#include "util.hpp"
 
 namespace {
 TLO_TEST(DArrayInitialCounts) {

@@ -28,7 +28,7 @@ target_include_directories(tlocpp_headers_only INTERFACE ${PROJECT_SOURCE_DIR}/i
 target_link_libraries(tlocpp_headers_only INTERFACE ${sanitizer_link_options})
 
 set(tlocpp_headers util.hpp darray.hpp ctci.hpp bigint.hpp test.hpp)
-set(tlocpp_sources util.cpp ctci.cpp bigint.cpp test.cpp)
+set(tlocpp_sources ctci.cpp bigint.cpp test.cpp)
 prepend(tlocpp_headers ${PROJECT_SOURCE_DIR}/include/tlo/ ${tlocpp_headers})
 add_library(tlocpp STATIC ${tlocpp_headers} ${tlocpp_sources})
 set_target_properties(tlocpp PROPERTIES CXX_EXTENSIONS OFF)
